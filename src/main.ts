@@ -4,11 +4,16 @@ import { ProductCatalog } from './components/Models/ProductCatalog';
 import { Basket } from './components/Models/Basket';
 import { Buyer } from './components/Models/Buyer';
 import { apiProducts } from './utils/data';
+import { API_URL_WORKS } from './utils/constants';
+import { Api } from './components/base/Api';
+import { WebLarekAPI } from './components/base/WebLarekAPI';
 
 const catalog = new ProductCatalog();
 const basket = new Basket();
 const buyer = new Buyer();
 const testId = 'b06cde61-912f-4663-9751-09956c0eed67';
+const api = new Api(API_URL_WORKS);
+const weblarekAPI = new WebLarekAPI(api);
 
 console.log('ТЕСТИРОВАНИЕ ProductCatalog');
 catalog.setItems(apiProducts.items);
@@ -46,3 +51,14 @@ console.log('Получение всех данных покупателя: ', b
 console.log('Валидация полных данных покупателя: ', buyer.validBuyerData());
 buyer.clearBuyerData();
 console.log('После очистки данных покупателя: ', buyer.getBuyerData());
+
+console.log('ТЕСТИРОВАНИЕ ЗАПРОСА К СЕРВЕРУ WebLarekAPI');
+weblarekAPI.getProductList()
+  .then(products => {
+    console.log('Каталог товаров с сервера: ', products);
+    catalog.setItems(products);
+    console.log('Каталог обновлён из API: ', catalog.getItems());
+  })
+  .catch(error => {
+    console.error('Ошибка загрузки товаров с сервера: ', error);
+  })
