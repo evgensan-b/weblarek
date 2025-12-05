@@ -1,18 +1,18 @@
 import './scss/styles.scss';
 
-import { ProductCatalog } from './components/Models/ProductCatalog';
-import { Basket } from './components/Models/Basket';
-import { Buyer } from './components/Models/Buyer';
+import { ProductCatalog } from './components/models/ProductCatalog';
+import { Basket } from './components/models/Basket';
+import { Buyer } from './components/models/Buyer';
 import { apiProducts } from './utils/data';
-import { API_URL_WORKS } from './utils/constants';
+import { API_URL } from './utils/constants';
 import { Api } from './components/base/Api';
-import { WebLarekAPI } from './components/base/WebLarekAPI';
+import { WebLarekAPI } from './components/services/WebLarekAPI';
 
 const catalog = new ProductCatalog();
 const basket = new Basket();
 const buyer = new Buyer();
 const testId = 'b06cde61-912f-4663-9751-09956c0eed67';
-const api = new Api(API_URL_WORKS);
+const api = new Api(API_URL);
 const weblarekAPI = new WebLarekAPI(api);
 
 console.log('ТЕСТИРОВАНИЕ ProductCatalog');

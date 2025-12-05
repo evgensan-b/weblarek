@@ -16,6 +16,13 @@ export interface IProduct {
 
 export type TPayment = 'card' | 'cash' | '';
 
+export type BuyerValidationErrors = {
+  payment?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+};
+
 export interface IBuyer {
     payment: TPayment;
     email: string;

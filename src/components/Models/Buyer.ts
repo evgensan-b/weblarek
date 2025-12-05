@@ -1,4 +1,4 @@
-import { IBuyer } from '../../types/index.ts';
+import { IBuyer, BuyerValidationErrors } from '../../types/index.ts';
 
 export class Buyer {
   data: IBuyer = {
@@ -15,11 +15,8 @@ export class Buyer {
     };
   }
 
-  getBuyerData(): IBuyer | null {
-    if (this.data) {
-      return this.data as IBuyer;
-    }
-    return null;
+  getBuyerData(): IBuyer {
+    return this.data;
   }
 
   clearBuyerData(): void {
@@ -31,8 +28,8 @@ export class Buyer {
     };
   }
 
-  validBuyerData(): Record<string, string> {
-    const errors: Record<string, string> = {};
+  validBuyerData(): BuyerValidationErrors {
+    const errors: BuyerValidationErrors = {};
 
     if (!this.data.payment) {
       errors.payment = 'Не выбран вид оплаты';

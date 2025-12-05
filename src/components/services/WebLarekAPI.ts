@@ -1,4 +1,4 @@
-import { IApi, IProduct, IOrderData, IOrderResponse, IProductListResponse } from '../../types/index.ts';
+import { IApi, IProduct, IOrderData, IOrderResponse, IProductListResponse } from '../../types';
 
 export class WebLarekAPI {
   api: IApi;
