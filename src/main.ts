@@ -16,6 +16,7 @@ import { Card } from './components/view/Card';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { CardCatalog } from './components/view/CardCatalog';
 import { CardPreview } from './components/view/CardPreview';
+import { CardBasket } from './components/view/CardBasket';
 
 const events = new EventEmitter();
 const api = new Api(API_URL);
@@ -33,7 +34,7 @@ function testHeaderSetters() {
 }
 
 events.on('basket:open', () => {
-    console.log('Событие - клик по кнопке корзины');
+    console.log('Событие: клик по кнопке корзины');
 });
 
 testHeaderSetters();
@@ -209,6 +210,41 @@ setTimeout(() => {
     
   testCardPreview();
 }, 10000);
+
+console.log('ТЕСТИРОВАНИЕ класса CardBasket');
+
+events.on('basket:item-delete', () => {
+    console.log('Событие: клик по кнопке удаления товара из корзины');
+});
+
+setTimeout(() => {
+  modal.close();
+    
+  function testCardBasket() {
+    const basketContainer = cloneTemplate<HTMLElement>('#card-basket');
+        
+    const cardBasket = new CardBasket(basketContainer, {
+      onClick: () => {
+        events.emit('basket:item-delete');
+      }
+    });
+        
+    cardBasket.title = 'Товар в корзине';
+    cardBasket.price = 10000;
+    cardBasket.index = 1;
+        
+    modal.content = basketContainer;
+    modal.open();
+
+    setTimeout(() => {
+      const button = basketContainer.querySelector('.basket__item-delete');
+
+      if (button) (button as HTMLButtonElement).click();
+    }, 1000);
+  }
+    
+  testCardBasket();
+}, 13000);
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
