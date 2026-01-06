@@ -11,6 +11,8 @@ import { WebLarekAPI } from './components/services/WebLarekAPI';
 import { Header } from './components/view/Header';
 import { Gallery } from './components/view/Gallery';
 import { Modal } from './components/view/Modal';
+import { Success } from './components/view/Success';
+import { cloneTemplate } from './utils/utils';
 import { ensureElement } from './utils/utils';
 
 const events = new EventEmitter();
@@ -69,6 +71,27 @@ function testModal() {
 }
 
 testModal();
+
+console.log('ТЕСТИРОВАНИЕ класса Success');
+
+setTimeout(() => {
+    modal.close();
+    
+    function testSuccess() {
+      console.log('Создаем Success из шаблона #success');
+      const successContainer = cloneTemplate<HTMLElement>('#success');
+      const success = new Success(events, successContainer);
+        
+      success.total = 153250;
+        
+      modal.content = successContainer;
+      modal.open();
+        
+      console.log('Success отображен в модальном окне. Можно его закрыть(клик на кнопку закрытия/"за новыми покупками", клик вне модального окна или нажатием на клавишу Escape)');
+    }
+    
+    testSuccess();
+}, 2000);
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
