@@ -13,8 +13,8 @@ import { Gallery } from './components/view/Gallery';
 import { Modal } from './components/view/Modal';
 import { Success } from './components/view/Success';
 import { Card } from './components/view/Card';
-import { cloneTemplate } from './utils/utils';
-import { ensureElement } from './utils/utils';
+import { cloneTemplate, ensureElement } from './utils/utils';
+import { CardCatalog } from './components/view/CardCatalog';
 
 const events = new EventEmitter();
 const api = new Api(API_URL);
@@ -121,6 +121,55 @@ setTimeout(() => {
     
   testCard();
 }, 6000);
+
+console.log('ТЕСТИРОВАНИЕ класса CardCatalog');
+
+setTimeout(() => {
+  modal.close();
+    
+  function testCardCatalog() {
+    const cards = [
+      {
+        title: 'Товар 1',
+        price: 750,
+        category: 'софт-скил',
+        image: 'product1.jpg'
+      },
+      {
+        title: 'Товар 2', 
+        price: 10000,
+        category: 'хард-скил',
+        image: 'product2.jpg'
+      },
+      {
+        title: 'Бесценный товар',
+        price: null,
+        category: 'другое',
+        image: 'product3.jpg'
+      }
+    ];
+    
+    const cardElements: HTMLElement[] = [];
+    
+    cards.forEach((cardData, index) => {
+      const cardContainer = cloneTemplate<HTMLElement>('#card-catalog');
+      const cardCatalog = new CardCatalog(cardContainer, {
+        onClick: () => {
+          console.log(`Клик по карточке ${index + 1}: ${cardData.title}`);
+          events.emit('product:open', { id: `test-id-${index}` });
+        }
+      });
+      
+      cardCatalog.render(cardData);
+      
+      cardElements.push(cardContainer);
+    });
+    
+    gallery.catalog = cardElements;
+  }
+    
+  testCardCatalog();
+}, 8000);
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
