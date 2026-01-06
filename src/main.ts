@@ -10,6 +10,7 @@ import { EventEmitter } from './components/base/Events';
 import { WebLarekAPI } from './components/services/WebLarekAPI';
 import { Header } from './components/view/Header';
 import { Gallery } from './components/view/Gallery';
+import { Modal } from './components/view/Modal';
 import { ensureElement } from './utils/utils';
 
 const events = new EventEmitter();
@@ -18,6 +19,7 @@ const weblarekAPI = new WebLarekAPI(api);
 
 const header = new Header(events, ensureElement<HTMLElement>('.header'));
 const gallery = new Gallery(ensureElement<HTMLElement>('.gallery'));
+const modal = new Modal(events, ensureElement<HTMLElement>('#modal-container'));
 
 
 console.log('ТЕСТИРОВАНИЕ класса Header');
@@ -49,6 +51,24 @@ function testGallerySetters() {
 }
 
 testGallerySetters();
+
+console.log('ТЕСТИРОВАНИЕ класса Modal');
+
+events.on('modal:close', () => {
+    modal.close();
+});
+
+function testModal() {
+    const testContent = document.createElement('div');
+    testContent.innerHTML = '<h2>Тест модального окна</h2><p>Содержимое модального окна</p>';
+    
+    modal.content = testContent;
+    modal.open();
+    
+    console.log('Модальное окно открыто. Можно его закрыть(клик на кнопку закрытия, клик вне модального окна или нажатием на клавишу Escape)');
+}
+
+testModal();
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
