@@ -9,6 +9,7 @@ import { Api } from './components/base/Api';
 import { EventEmitter } from './components/base/Events';
 import { WebLarekAPI } from './components/services/WebLarekAPI';
 import { Header } from './components/view/Header';
+import { Gallery } from './components/view/Gallery';
 import { ensureElement } from './utils/utils';
 
 const events = new EventEmitter();
@@ -16,6 +17,7 @@ const api = new Api(API_URL);
 const weblarekAPI = new WebLarekAPI(api);
 
 const header = new Header(events, ensureElement<HTMLElement>('.header'));
+const gallery = new Gallery(ensureElement<HTMLElement>('.gallery'));
 
 
 console.log('ТЕСТИРОВАНИЕ класса Header');
@@ -29,6 +31,24 @@ events.on('basket:open', () => {
 });
 
 testHeaderSetters();
+
+console.log('ТЕСТИРОВАНИЕ класса Gallery');
+function testGallerySetters() {
+  console.log('Добавляем карточки в каталог');
+  
+  const card1 = document.createElement('div');
+  card1.textContent = 'Карточка 1';
+  
+  const card2 = document.createElement('div');
+  card2.textContent = 'Карточка 2';
+  
+  gallery.catalog = [card1, card2];
+  
+  console.log('Очищаем каталог');
+  gallery.catalog = [];
+}
+
+testGallerySetters();
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
