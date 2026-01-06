@@ -12,6 +12,7 @@ import { Header } from './components/view/Header';
 import { Gallery } from './components/view/Gallery';
 import { Modal } from './components/view/Modal';
 import { Success } from './components/view/Success';
+import { Card } from './components/view/Card';
 import { cloneTemplate } from './utils/utils';
 import { ensureElement } from './utils/utils';
 
@@ -92,6 +93,34 @@ setTimeout(() => {
     
     testSuccess();
 }, 2000);
+
+console.log('ТЕСТИРОВАНИЕ класса Card');
+
+class TestCard extends Card<{}> {
+  constructor(container: HTMLElement) {
+    super(container);
+  }
+}
+
+setTimeout(() => {
+  modal.close();
+    
+  function testCard() {
+    const cardContainer = cloneTemplate<HTMLElement>('#card-catalog');
+    const testCard = new TestCard(cardContainer);
+        
+    testCard.title = 'Тестовый товар';
+    testCard.price = 10000;
+        
+    setTimeout(() => {
+      modal.content = cardContainer;
+      modal.open();
+      console.log('Карточка открыта в модальном окне');
+    }, 1000);
+  }
+    
+  testCard();
+}, 6000);
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();

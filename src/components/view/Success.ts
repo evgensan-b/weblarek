@@ -22,7 +22,9 @@ export class Success extends Component<ISuccess> {
   }
 
   set total(value: number) {
-    const formattedValue = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    const formattedValue = value >= 10000 
+        ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
+        : value.toString();
     this.description.textContent = `Списано ${formattedValue} синапсов`;
   }
 }
