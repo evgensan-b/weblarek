@@ -15,6 +15,7 @@ import { Success } from './components/view/Success';
 import { Card } from './components/view/Card';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { CardCatalog } from './components/view/CardCatalog';
+import { CardPreview } from './components/view/CardPreview';
 
 const events = new EventEmitter();
 const api = new Api(API_URL);
@@ -59,6 +60,7 @@ console.log('ТЕСТИРОВАНИЕ класса Modal');
 
 events.on('modal:close', () => {
     modal.close();
+    console.log('Событие: клик для закрытия модального окна');
 });
 
 function testModal() {
@@ -155,7 +157,7 @@ setTimeout(() => {
       const cardContainer = cloneTemplate<HTMLElement>('#card-catalog');
       const cardCatalog = new CardCatalog(cardContainer, {
         onClick: () => {
-          console.log(`Клик по карточке ${index + 1}: ${cardData.title}`);
+          console.log(`Событие: клик по карточке ${index + 1}: ${cardData.title}`);
           events.emit('product:open', { id: `test-id-${index}` });
         }
       });
@@ -164,12 +166,49 @@ setTimeout(() => {
       
       cardElements.push(cardContainer);
     });
-    
+
     gallery.catalog = cardElements;
   }
     
   testCardCatalog();
 }, 8000);
+
+console.log('ТЕСТИРОВАНИЕ класса CardPreview');
+
+events.on('product:toggle-cart', () => {
+    console.log('Событие: клик по кнопке добавления/удаления из корзины');
+});
+
+setTimeout(() => {
+  modal.close();
+    
+  function testCardPreview() {
+    const previewContainer = cloneTemplate<HTMLElement>('#card-preview');
+    const cardPreview = new CardPreview(events, previewContainer);
+        
+    cardPreview.title = 'Подробный просмотр товара';
+    cardPreview.price = 10000;
+    cardPreview.category = 'хард-скил';
+    cardPreview.description = 'Подробное описание товара';
+    cardPreview.image = 'detail-product.jpg';
+        
+    cardPreview.buttonText = 'В корзину';
+    cardPreview.disabled = false;
+        
+    modal.content = previewContainer;
+    modal.open();
+        
+    setTimeout(() => {
+      cardPreview.disabled = true;
+            
+      setTimeout(() => {
+        cardPreview.disabled = false;
+      }, 2000);
+    }, 3000);
+  }
+    
+  testCardPreview();
+}, 10000);
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
