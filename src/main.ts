@@ -17,6 +17,7 @@ import { cloneTemplate, ensureElement } from './utils/utils';
 import { CardCatalog } from './components/view/CardCatalog';
 import { CardPreview } from './components/view/CardPreview';
 import { CardBasket } from './components/view/CardBasket';
+import { BasketView } from './components/view/BasketView';
 
 const events = new EventEmitter();
 const api = new Api(API_URL);
@@ -245,6 +246,40 @@ setTimeout(() => {
     
   testCardBasket();
 }, 13000);
+
+console.log('ТЕСТИРОВАНИЕ Basket');
+
+events.on('basket:order', () => console.log('Событие: клик по кнопке оформления заказа в корзине'));
+events.on('basket:item-delete', () => console.log('Событие: клик по кнопке удаления товара из корзины'));
+
+setTimeout(() => {
+  modal.close();
+    
+  function testBasket() {
+    const basketContainer = cloneTemplate<HTMLElement>('#basket');
+    const basket = new BasketView(events, basketContainer);
+        
+    const itemContainer = cloneTemplate<HTMLElement>('#card-basket');
+    const cardBasket = new CardBasket(itemContainer, {
+        onClick: () => events.emit('basket:item-delete')
+    });
+        
+    cardBasket.title = 'Тестовый товар';
+    cardBasket.price = 10000;
+    cardBasket.index = 1;
+        
+    basket.items = [itemContainer];
+    basket.total = 10000;
+    basket.disabled = false;
+        
+    modal.content = basketContainer;
+    modal.open();  
+  }
+    
+    testBasket();
+}, 15000);
+
+
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
