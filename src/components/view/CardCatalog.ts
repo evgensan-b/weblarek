@@ -1,4 +1,4 @@
-import { Card } from "./Card";
+import { Card } from './Card';
 import { ensureElement } from '../../utils/utils';
 import { categoryMap, CDN_URL } from "../../utils/constants";
 

@@ -18,6 +18,9 @@ import { CardCatalog } from './components/view/CardCatalog';
 import { CardPreview } from './components/view/CardPreview';
 import { CardBasket } from './components/view/CardBasket';
 import { BasketView } from './components/view/BasketView';
+import { Form } from './components/view/Form';
+import { FormOrder } from './components/view/FormOrder';
+import { FormContacts } from './components/view/FormContacts';
 
 const events = new EventEmitter();
 const api = new Api(API_URL);
@@ -247,7 +250,7 @@ setTimeout(() => {
   testCardBasket();
 }, 13000);
 
-console.log('ТЕСТИРОВАНИЕ Basket');
+console.log('ТЕСТИРОВАНИЕ BasketView');
 
 events.on('basket:order', () => console.log('Событие: клик по кнопке оформления заказа в корзине'));
 events.on('basket:item-delete', () => console.log('Событие: клик по кнопке удаления товара из корзины'));
@@ -279,7 +282,59 @@ setTimeout(() => {
     testBasket();
 }, 15000);
 
+console.log('ТЕСТИРОВАНИЕ классов Form и FormOrder');
 
+events.on('form:changed', (data: { key: string, value: any }) => {
+    console.log(`Событие: - ${data.key}: ${data.value}`);
+});
+
+setTimeout(() => {
+  modal.close();
+    
+  function testFormOrder() {
+    const orderContainer = cloneTemplate<HTMLElement>('#order');
+    const formOrder = new FormOrder(events, orderContainer);
+        
+    formOrder.payment = 'card';
+    // formOrder.payment = 'cash';
+    // formOrder.payment = '';
+    formOrder.address = 'ул. Пушкина, д. 1';
+    formOrder.error = 'Неверный адрес доставки';
+    formOrder.valid = false;   
+    // formOrder.valid = true;
+
+    modal.content = orderContainer;
+    modal.open();
+  }
+
+    testFormOrder();
+}, 17000);
+
+console.log('ТЕСТИРОВАНИЕ классов Form и FormContacts');
+
+events.on('form:changed', (data: { key: string, value: any }) => {
+    console.log(`Событие - ${data.key}: ${data.value}`);
+});
+
+setTimeout(() => {
+  modal.close();
+    
+  function testFormContacts() {
+    const contactsContainer = cloneTemplate<HTMLElement>('#contacts');
+    const formContacts = new FormContacts(events, contactsContainer);
+        
+    formContacts.email = 'test@example.com';
+    formContacts.phone = '+7 (495) 123-45-67';
+    formContacts.error = 'Неверный email и телефон';
+    formContacts.valid = false;
+    // formContacts.valid = true;
+        
+    modal.content = contactsContainer;
+    modal.open();
+  }
+    
+  testFormContacts();
+}, 19000);
 
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
