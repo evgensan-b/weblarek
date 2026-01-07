@@ -30,7 +30,7 @@ const header = new Header(events, ensureElement<HTMLElement>('.header'));
 const gallery = new Gallery(ensureElement<HTMLElement>('.gallery'));
 const modal = new Modal(events, ensureElement<HTMLElement>('#modal-container'));
 
-
+//ТЕСТЫ для проверки работы классов в ПРОЕКТНОЙ РАБОТЕ 9
 console.log('ТЕСТИРОВАНИЕ класса Header');
 function testHeaderSetters() {
   console.log('Товаров в корзине - 3');
@@ -336,6 +336,7 @@ setTimeout(() => {
   testFormContacts();
 }, 19000);
 
+//ТЕСТЫ для проверки работы классов в ПРОЕКТНОЙ РАБОТЕ 8
 // const catalog = new ProductCatalog();
 // const basket = new Basket();
 // const buyer = new Buyer();
