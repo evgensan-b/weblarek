@@ -136,10 +136,8 @@ events.on('basket:changed', (items: IProduct[]) => {
     const basketButton = modalContent.querySelector('.basket__button');
 
     if (basketList) basketList.replaceChildren(...basketItems);
-    if (basketTotal)
-      basketTotal.textContent = `${basketModel.getTotalPrice()} синапсов`;
-    if (basketButton)
-      (basketButton as HTMLButtonElement).disabled = items.length === 0;
+    if (basketTotal) basketTotal.textContent = `${basketModel.getTotalPrice()} синапсов`;
+    if (basketButton) (basketButton as HTMLButtonElement).disabled = items.length === 0;
   }
 });
 
