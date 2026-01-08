@@ -34,6 +34,10 @@ export class FormOrder extends Form<IFormOrder> {
         value: this.formAddress.value 
       });
     });
+    this.container.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.events.emit('order:submit');
+    });
   }
 
   set payment(value: TPayment) {

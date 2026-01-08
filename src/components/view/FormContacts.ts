@@ -30,6 +30,10 @@ export class FormContacts extends Form<IFormContacts> {
         value: this.formPhone.value 
       });
     });
+    this.container.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.events.emit('contacts:submit');
+    });
   }
 
   set email(value: string) {
