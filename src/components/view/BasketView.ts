@@ -1,6 +1,6 @@
 import { Component } from '../base/Component';
 import { IEvents } from '../base/Events';
-import { ensureElement } from '../../utils/utils';
+import { ensureElement, formatPrice } from '../../utils/utils';
 
 interface IBasketView {
   items: HTMLElement[];
@@ -28,9 +28,7 @@ export class BasketView extends Component<IBasketView> {
     this.basketList.replaceChildren(...value);
   }
   set total(value: number) {
-    const formattedValue = value >= 10000 
-        ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-        : value.toString();
+    const formattedValue = formatPrice(value);
     this.basketTotal.textContent = `${formattedValue} синапсов`;
   } 
   set disabled(value: boolean) {

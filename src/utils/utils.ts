@@ -136,3 +136,15 @@ export function createElement<
     }
     return element;
 }
+
+/**
+ * Форматирует цену для соответствия отображения макету
+ * Добавляет пробелы между тысячами для чисел >= 10000
+ * @param value - число для форматирования
+ */
+export function formatPrice(value: number): string {
+  if (value >= 10000) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+  return value.toString();
+}

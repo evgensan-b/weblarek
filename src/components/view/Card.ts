@@ -1,5 +1,5 @@
 import { Component } from '../base/Component';
-import { ensureElement } from '../../utils/utils';
+import { ensureElement, formatPrice } from '../../utils/utils';
 
 interface ICard {
   title: string;
@@ -25,9 +25,7 @@ export abstract class Card<T> extends Component<ICard & T> {
     if (value === null) {
       this.cardPrice.textContent = 'Бесценно';
     } else {
-      const formattedValue = value >= 10000 
-        ? value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-        : value.toString();
+      const formattedValue = formatPrice(value);
       this.cardPrice.textContent = `${formattedValue} синапсов`;
     }
   }

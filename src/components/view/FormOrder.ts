@@ -43,11 +43,7 @@ export class FormOrder extends Form<IFormOrder> {
   set payment(value: TPayment) {
     this.formOrderButtons.forEach((button: HTMLButtonElement) => {
       const buttonName = button.name as TPayment;
-      if (buttonName == value) {
-        button.classList.add('button_alt-active');
-      } else {
-        button.classList.remove('button_alt-active');
-      };
+      button.classList.toggle('button_alt-active', buttonName === value);
     });
   };
   set address(value: string) {
